@@ -1,0 +1,20 @@
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: marquee
+  name: marquee-cert
+spec:
+  secretName: marquee-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - 'hello.high.am'
+  acme:
+    config:
+    - dns01:
+        provider: clouddns
+      domains:
+      - 'hello.high.am'
+    

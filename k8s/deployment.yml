@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  namespace: marquee
+  labels:
+    app: marquee-client
+  name: marquee-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: marquee-client
+  template:
+    metadata:
+      labels:
+        app: marquee-client
+    spec:
+      containers:
+      - image: harbor.high.am/danhigham/marquee-client
+        name: marquee-client
+        ports:
+        - containerPort: 8080
+        env:
+        - name: RABBIT_HOST
+          value: home-rabbit-rabbitmq.rabbitmq.svc.cluster.local:5672
+        - name: QUEUE
+          value: marquee.messages
+        - name: RABBIT_USER
+          value: marquee
+        - name: RABBIT_PASSWORD
+          value: marquee123
+      imagePullSecrets:
+      - name: regcred
